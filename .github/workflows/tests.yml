@@ -42,7 +42,7 @@ jobs:
         run: python -m pytest --cov=bolts --cov-report=term-missing --cov-report=xml --cov-fail-under=95
       - name: Upload coverage to Codecov
         if: matrix.python-version == '3.12'
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v7
         with:
           files: coverage.xml
           fail_ci_if_error: false
