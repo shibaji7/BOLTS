@@ -1,0 +1,6 @@
+# Branching units: placeholders for v0.3. All unknown until an architecture and vendor data exist.
+[bu]
+sea_earth_resistance_ohm   = { value = "TBD", unit = "ohm", status = "unknown", source = "BU sea-earth electrode; design data" }
+relay_on_resistance_ohm    = { value = "TBD", unit = "ohm", status = "unknown", source = "power-switching relay in the closed state" }
+current_limiting_ohm       = { value = "TBD", unit = "ohm", status = "unknown", source = "resistor bank used against hot switching (Chesnoy p. 395)" }
+electrode_mass_kg          = { value = 25.0, unit = "kg", status = "sourced", source = "Chesnoy p. 395: a copper BU sea-earth electrode has a mass of about 25 kg" }

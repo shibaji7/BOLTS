@@ -1,0 +1,50 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - name: Install ngspice (cross-check tests)
+        run: sudo apt-get update && sudo apt-get install -y ngspice
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install ".[dev,plots]"
+      - name: Lint (ruff)
+        run: python -m ruff check src tests scripts examples
+      - name: Duplicate-code check (pylint R0801)
+        run: python -m pylint --rcfile=.pylintrc src/bolts tests
+      - name: SPDX headers
+        run: python scripts/check_spdx.py
+      - name: Tests with coverage
+        run: python -m pytest --cov=bolts --cov-report=term-missing --cov-report=xml --cov-fail-under=95
+      - name: Upload coverage to Codecov
+        if: matrix.python-version == '3.12'
+        uses: codecov/codecov-action@v5
+        with:
+          files: coverage.xml
+          fail_ci_if_error: false
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}

@@ -1,0 +1,5 @@
+# Lightning: placeholders for v0.2 to v0.4. Standard values must be verified from IEC 62305 and CIGRE before use.
+[lightning]
+peak_current_median_kA     = { value = "TBD", unit = "kA", status = "unknown", source = "median first-stroke peak current (log-normal statistics); verify against CIGRE / IEEE" }
+ground_flash_density_per_km2_yr = { value = "TBD", unit = "1/(km2 yr)", status = "unknown", source = "site thunderstorm statistics (keraunic level)" }
+rod_to_pfe_earth_separation_m   = { value = "TBD", unit = "m", status = "unknown", source = "Chesnoy p. 390: the influence is roughly inversely proportional to the separation of the two earths" }

@@ -1,0 +1,70 @@
+site_name: BOLTS
+site_description: Branching-unit and Optical-repeater power-feed Loop Transient Simulator
+repo_url: https://github.com/shibaji7/BOLTS
+theme:
+  name: material
+  features:
+    - content.code.copy
+    - navigation.tabs
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - search.suggest
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            show_root_heading: true
+            show_source: false
+            members_order: source
+            docstring_style: google
+markdown_extensions:
+  - admonition
+  - attr_list
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.snippets:
+      base_path: .
+      check_paths: true
+nav:
+  - Home: index.md
+  - Start here:
+      - Install: user/install.md
+      - Quick start: user/quickstart.md
+      - Command line: user/cli.md
+  - The model, chapter by chapter:
+      - 00 Overview: chapters/00_overview.md
+      - 01 From storm to volts: chapters/01_storm_to_volts.md
+      - 02 Power feeding: chapters/02_power_feeding.md
+      - 03 The circuit model: chapters/03_circuit_model.md
+      - 04 Repeater and optics: chapters/04_repeater_and_optics.md
+      - 05 Terminal and traffic: chapters/05_terminal_and_traffic.md
+      - 06 Field along the link: chapters/06_field_along_the_link.md
+      - 07 Parameters and provenance: chapters/07_parameters_and_provenance.md
+      - 08 Limits and what is left out: chapters/08_limitations_and_not_implemented.md
+      - 09 Validation and tests: chapters/09_validation_and_tests.md
+      - 10 Run and extend: chapters/10_run_and_extend.md
+      - 11 Glossary: chapters/11_glossary.md
+      - 12 Cable properties: chapters/12_cable_properties.md
+      - 13 Zener and protection: chapters/13_zener_protection.md
+      - 14 Branching units: chapters/14_branching_units.md
+      - 15 Lightning: chapters/15_lightning.md
+      - 16 Earthing and damage: chapters/16_earthing_damage.md
+  - Developer guide:
+      - Architecture: dev/architecture.md
+      - Adding an element: dev/adding_element.md
+      - Testing and validation: dev/testing.md
+      - Tooling: dev/tooling.md
+      - Release: dev/release.md
+      - Later - microsecond windows: dev/future_microsecond_windows.md
+  - API: api/index.md
+  - Roadmap: roadmap.md
+  - Changelog: changelog.md
+  - Sources: references.md
+  - Citing: user/citing.md

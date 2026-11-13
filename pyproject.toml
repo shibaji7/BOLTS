@@ -1,0 +1,70 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bolts"
+dynamic = ["version"]
+description = "BOLTS: Branching-unit and Optical-repeater power-feed Loop Transient Simulator. Stress and vulnerability of submarine power-feed systems under geomagnetic disturbances (GMD / space weather), lightning and switching surges, down to loss of signal, failures and traffic loss."
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "LGPL-3.0-or-later"}
+authors = [{name = "Shibaji Chakraborty", email = "chakras4@erau.edu"}]
+maintainers = [{name = "Shibaji Chakraborty", email = "chakras4@erau.edu"}]
+keywords = [
+  "submarine cable", "power feed", "PFE", "repeater", "branching unit",
+  "geomagnetic disturbance", "space weather", "GMD", "lightning", "surge", "transient",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Scientific/Engineering :: Physics",
+  "Topic :: Scientific/Engineering :: Electrical Engineering" ,
+]
+dependencies = ["numpy", "scipy"]
+
+[project.optional-dependencies]
+plots = ["matplotlib>=3.5", "SciencePlots"]
+data = ["pandas"]
+dev = ["pytest>=8", "pytest-cov>=4", "ruff", "pylint", "pre-commit", "build", "twine"]
+docs = ["mkdocs>=1.5", "mkdocs-material>=9.5", "mkdocstrings[python]>=0.24"]
+
+[project.scripts]
+bolts = "bolts.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/shibaji7/BOLTS"
+Documentation = "https://bolts.readthedocs.io/"
+Issues = "https://github.com/shibaji7/BOLTS/issues"
+
+[tool.setuptools.dynamic]
+version = {attr = "bolts._version.__version__"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+bolts = ["py.typed", "config/defaults/*.toml"]
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+addopts = "-ra"
+testpaths = ["tests"]
+markers = [
+  "spice: needs the ngspice binary",
+  "regression: compares with the pfe_design study when it is available",
+]
+
+[tool.coverage.run]
+branch = true
+source = ["bolts"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true

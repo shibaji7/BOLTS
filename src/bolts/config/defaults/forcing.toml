@@ -1,0 +1,10 @@
+# Your own voltage record (net end-to-end induced voltage V_ind(t), volts; positive drives current toward increasing chainage).
+[forcing]
+csv_path        = { value = "data/example_vind_1s.csv", status = "assumed", source = "path to the voltage CSV, relative to the current directory (or absolute). The shipped file is SYNTHETIC (storm backbone (peak about -200 V), random 2.5 to 600 s pulsations, one onset impulse; scripts/make_synthetic_vind.py); replace it with your 1-second or sub-second record" }
+time_column     = { value = "t_s", status = "assumed", source = "name of the time column" }
+time_format     = { value = "seconds", status = "assumed", source = "'seconds' (any origin; the run starts at 0) or 'iso' (ISO-8601 timestamps)" }
+voltage_column  = { value = "v_ind_V", status = "assumed", source = "name of the voltage column (volts)" }
+scale           = { value = 1.0, status = "assumed", source = "multiplies every voltage in the file" }
+window_start_s  = { value = 0.0, unit = "s", status = "assumed", source = "start of the window, seconds from the first row" }
+window_end_s    = { value = -1.0, unit = "s", status = "assumed", source = "end of the window, seconds from the first row; negative means the end of the file" }
+model_dt_s      = { value = 0.0, unit = "s", status = "assumed", source = "step of the run; 0 = the file's own spacing; otherwise resampled by linear interpolation" }

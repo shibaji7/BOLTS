@@ -1,0 +1,18 @@
+# Cable and link. Every parameter: value, unit, status (sourced | assumed | unknown | override), source.
+[cable]
+length_km               = { value = 750.8, unit = "km", status = "assumed", source = "Point Hope to Gambell link of the pfe_design study (route chainage 5601.2 to 6352.0 km); replace for another link" }
+resistance_ohm_per_km   = { value = 1.0, unit = "ohm/km", status = "sourced", source = "Chesnoy ch.13 (printed p. 479): typical linear ohmic resistance about 1 ohm/km" }
+capacitance_uF_per_km   = { value = 0.2, unit = "uF/km", status = "assumed", source = "placeholder, conductor to sea; vendor value unknown. Provider: bolts.properties (constant now, section table in v0.2)" }
+leakage_S_per_km        = { value = 0.0, unit = "S/km", status = "assumed", source = "placeholder (G' = 0); vendor value unknown. Provider: bolts.properties" }
+inductance_mH_per_km    = { value = "TBD", unit = "mH/km", status = "unknown", source = "needed for microsecond surges (v0.2); not used by the slow GMD runs. A few tenths of a henry over 750 km is the pfe_design estimate" }
+emf_share_of_loop       = { value = 1.0, status = "assumed", source = "fraction of the record's net end-to-end voltage applied along the cable (spread evenly over every span)" }
+seabed_temperature_C      = { value = 4.0, unit = "C", status = "assumed", source = "deep-sea water temperature (about 2 to 4 C); used only by the temperature-dependent provider (bolts.properties.temperature_R), which is opt-in. Replace with the route's measured seabed temperature" }
+conductor_tempco_per_K    = { value = 0.00393, unit = "1/K", status = "assumed", source = "textbook temperature coefficient of copper resistance at 20 C; check against the cable vendor's conductor datasheet" }
+resistance_reference_temperature_C = { value = 20.0, unit = "C", status = "assumed", source = "temperature at which resistance_ohm_per_km is taken to apply when the temperature-dependent provider is used; the sourced 1 ohm/km does not state one" }
+temperature_model         = { value = "off", status = "assumed", source = "'off' keeps the constant resistance_ohm_per_km; 'copper' scales it by 1 + alpha (T - T_ref) at the seabed temperature (bolts.properties.temperature_R). Off by default so the pfe_design regression holds" }
+section_table_csv         = { value = "none", status = "assumed", source = "path to a per-section table (x_start_km, x_end_km, r_ohm_per_km, c_uF_per_km[, g_S_per_km, l_mH_per_km]) from the cable design; 'none' = uniform values above. data/example_cable_sections.csv is an illustration only" }
+depth_profile_csv         = { value = "none", status = "assumed", source = "path to the route's water depth (columns x_km, depth_m); 'none' = depth ignored. data/example_route_depth.csv is an illustration only" }
+depth_temperature_csv     = { value = "none", status = "assumed", source = "path to seabed temperature by depth (columns depth_m, temperature_C); 'none' = the constant seabed_temperature_C. data/example_depth_temperature.csv is an illustration only" }
+insulation_exponent_n     = { value = "TBD", status = "unknown", source = "exponent n of the insulation life law V^n t = constant (Chesnoy Eq. 10.1, from Dakin 1983); device-specific, unpublished. Sweep 10 to 40 in studies" }
+design_life_years         = { value = 25.0, unit = "years", status = "assumed", source = "typical design life of submerged plant; used with the nominal end voltage as the reference point of the life law. Confirm with the operator" }
+

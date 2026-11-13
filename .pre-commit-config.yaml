@@ -1,0 +1,54 @@
+# pre-commit configuration: `make pre-commit-install` once, then every commit runs these.
+# Run everything by hand with `make pre-commit`.
+minimum_pre_commit_version: "3.5.0"
+default_stages: [pre-commit]
+exclude: '^(site/|dist/|build/|outputs/|LICENSE$|COPYING$)'
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
+      - id: check-yaml
+      - id: check-toml
+      - id: check-merge-conflict
+      - id: check-case-conflict
+      - id: check-added-large-files
+        args: ["--maxkb=800"]
+      - id: debug-statements
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.17.4
+    hooks:
+      - id: ruff-check
+        args: ["--fix", "--exit-non-zero-on-fix"]
+
+  - repo: local
+    hooks:
+      - id: pylint-duplicate-code
+        name: pylint duplicate-code (R0801)
+        entry: python -m pylint --rcfile=.pylintrc
+        language: system
+        types: [python]
+        pass_filenames: false
+        args: ["src/bolts", "tests"]
+      - id: spdx-header
+        name: SPDX license header on every Python file
+        entry: python scripts/check_spdx.py
+        language: system
+        types: [python]
+      - id: changelog
+        name: CHANGELOG.md updated when src/bolts changes
+        entry: python scripts/check_changelog.py
+        language: system
+        pass_filenames: false
+        always_run: true
+      - id: pytest-fast
+        name: pytest (pre-push)
+        entry: python -m pytest -q -x
+        language: system
+        pass_filenames: false
+        always_run: true
+        stages: [pre-push]

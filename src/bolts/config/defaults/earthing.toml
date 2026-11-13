@@ -1,0 +1,10 @@
+[earthing]
+landing_earth_resistance_ohm      = { value = 3.0, unit = "ohm", status = "sourced", source = "Chesnoy Sec. 10.2.4 (p. 387): system earth electrodes typically below 3 ohm (upper bound used)" }
+station_vs_system_earth_V_nominal = { value = 20.0, unit = "V", status = "sourced", source = "Chesnoy Sec. 10.2.4 (p. 387): recommended nominal difference between system earth and station earth, at most 20 V (reference)" }
+station_vs_system_earth_V_lightning = { value = 90.0, unit = "V", status = "sourced", source = "Chesnoy Sec. 10.2.4 (p. 387): exceptional increase to 90 V in a lightning environment (reference)" }
+soil_resistivity_ohm_m            = { value = "TBD", unit = "ohm m", status = "unknown", source = "soil resistivity at the landing; measure with the Wenner method (bolts.earthing.soil.wenner_resistivity_ohm_m). With the four rod_* parameters it sets the landing earth resistance instead of the 3 ohm bound. Typical range 10 (wet) to 3000 ohm m (rock)" }
+rod_count                         = { value = "TBD", status = "unknown", source = "number of buried rods in a line at each landing (1 to 4; Chesnoy Eq. 10.4 tabulates lambda for 2, 3 and 4); station design" }
+rod_length_m                      = { value = "TBD", unit = "m", status = "unknown", source = "buried length b of each rod (Chesnoy Eq. 10.3); station design" }
+rod_radius_m                      = { value = "TBD", unit = "m", status = "unknown", source = "radius r of each rod; station design" }
+rod_spacing_m                     = { value = "TBD", unit = "m", status = "unknown", source = "spacing a between rods in the line (needed for n >= 2); station design" }
+

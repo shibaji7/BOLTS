@@ -1,0 +1,15 @@
+# pylint is used ONLY for its duplicate-code check (R0801). Everything else is ruff's job.
+[MAIN]
+py-version = 3.11
+
+[MESSAGES CONTROL]
+disable = all
+enable = duplicate-code
+
+[SIMILARITIES]
+# a block is "duplicate" when this many consecutive lines are identical in two files
+min-similarity-lines = 7
+ignore-comments = yes
+ignore-docstrings = yes
+ignore-imports = yes
+ignore-signatures = yes

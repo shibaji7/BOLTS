@@ -1,0 +1,14 @@
+[repeater]
+spacing_km                 = { value = 60.0, unit = "km", status = "assumed", source = "typical spacing; Chesnoy examples use 50 to 70 km (p. 191)" }
+voltage_drop_V             = { value = 56.0, unit = "V", status = "sourced", source = "Chesnoy ch.12 (pp. 430-431): about 56 V for an 8 amp-pair unipolar repeater (Zener stack)" }
+dynamic_resistance_ohm     = { value = 5.0, unit = "ohm", status = "assumed", source = "placeholder slope of the Zener stack; vendor value unknown (pfe_design swept 0 to 60 ohm)" }
+current_margin_fraction    = { value = 0.10, status = "sourced", source = "Chesnoy Table 10.1 (p. 385): 10% electroding margin" }
+pump_current_fraction      = { value = 0.8, status = "sourced", source = "Chesnoy Table 10.1 (p. 385): laser current 80% of the line current" }
+control_current_fraction   = { value = 0.1, status = "sourced", source = "Chesnoy Table 10.1 (p. 385): control circuit 10%" }
+zener_knee_current_A       = { value = "TBD", unit = "A", status = "unknown", source = "v0.2 piecewise Zener: current where the stack starts to conduct; vendor datasheet" }
+zener_power_rating_W       = { value = "TBD", unit = "W", status = "unknown", source = "continuous power rating of the shunt stack (damage criterion); vendor" }
+zener_surge_rating_A       = { value = "TBD", unit = "A", status = "unknown", source = "8/20 us surge rating of the clamp; the book gives only the repeater bypass (200 A long pulses, 450 A at 15 kV short pulses, p. 392)" }
+zener_temp_coeff_mV_per_K  = { value = "TBD", unit = "mV/K", status = "unknown", source = "temperature coefficient of the stack voltage (v0.5 electro-thermal Zener); vendor" }
+housing_capacitance_nF     = { value = "TBD", unit = "nF", status = "unknown", source = "repeater housing to sea, the surge path to earth (v0.2); vendor" }
+zener_below_knee_fraction = { value = "TBD", status = "unknown", source = "voltage across the repeater at zero current as a fraction of its value at the knee: 0 = the repeater circuit is resistive below the knee (the voltage falls to zero with the current), 1 = the voltage stays put (laser-diode-like). Used with zener_knee_current_A; if only the knee is given the model uses 0, the strongest effect. Study range 0 to 0.9" }
+

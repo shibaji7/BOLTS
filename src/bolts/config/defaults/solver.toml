@@ -1,0 +1,3 @@
+[solver]
+dt_s        = { value = 0.1, unit = "s", status = "assumed", source = "time step of the transient. The regulator is integrated exactly, so any dt / tau is accepted; a jump between two samples is a ramp over dt" }
+integrator  = { value = "backward_euler", status = "assumed", source = "backward_euler (stable for the stiff ladder); trapezoid is planned" }

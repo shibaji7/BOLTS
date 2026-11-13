@@ -1,0 +1,9 @@
+# conda env for BOLTS: deliberately small. Everything else is optional (see pyproject extras).
+name: bolts
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - numpy
+  - scipy
+  - pip

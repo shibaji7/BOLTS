@@ -1,0 +1,21 @@
+[pfe]
+feed_current_A             = { value = 1.0, unit = "A", status = "assumed", source = "inside the sourced 0.5 to 1.5 A repeater range (Chesnoy ch.12)" }
+max_voltage_kV_per_end     = { value = 2.5, unit = "kV", status = "assumed", source = "operator basis of pfe_design: 5 kV in total, 2.5 kV per end with the 50/50 split. Override for what-ifs (pfe_design also ran 0.75 kV per end = 1.5 kV total)" }
+split_fraction_end_A       = { value = 0.5, status = "sourced", source = "NEC / Chesnoy p. 392: each end normally feeds half of the system voltage, with opposite signs" }
+feed_configuration         = { value = "double_end", status = "sourced", source = "Chesnoy pp. 392-393: double-end feeding; single_end after one PFE fails" }
+feed_direction             = { value = 1, status = "assumed", source = "+1: feed current flows toward increasing chainage; an induced voltage along +chainage then assists the PFEs" }
+regulator_bandwidth_Hz     = { value = 200.0, unit = "Hz", status = "sourced", source = "Chesnoy Sec. 10.3.2 (p. 390): a PFE current controller typically operates on a control loop of around 200 Hz bandwidth (stated in a lightning discussion; no loop shape given)" }
+regulator_response_s       = { value = 0.005, unit = "s", status = "assumed", source = "tau = 1 / regulator_bandwidth_Hz = 5 ms (convention of the pfe_design study, no 2 pi); the 1/(2 pi 200 Hz) = 0.8 ms reading is a sensitivity. First-order loop, integrated exactly over each step" }
+converter_modules          = { value = "TBD", status = "unknown", source = "series converter modules per PFE (n+1 redundancy); a vendor catalogue shows 6 with 5 needed, Chesnoy p. 398: N:1 protected" }
+failover_time_s            = { value = "TBD", unit = "s", status = "unknown", source = "converter transfer time; a web claim of under 50 ms is unverified and is NOT used" }
+output_filter_L_mH         = { value = "TBD", unit = "mH", status = "unknown", source = "PFE output filter inductance (v0.2 surges); vendor" }
+output_filter_C_uF         = { value = "TBD", unit = "uF", status = "unknown", source = "PFE output filter capacitance (v0.2 surges); vendor" }
+converter_module_rating_V  = { value = "TBD", unit = "V", status = "unknown", source = "voltage rating of one series converter module (the PFE cap is about modules x rating); vendor. For studies the cap is max_voltage_kV_per_end" }
+output_slew_limit_V_per_s  = { value = "TBD", unit = "V/s", status = "unknown", source = "fastest rate at which the PFE can change its output (slow ramp-up/down, Chesnoy p. 397); vendor. Sweep 10 V/s to 1 kV/s in studies" }
+overcurrent_trip_fraction  = { value = "TBD", status = "unknown", source = "line current, as a multiple of the set current, above which the PFE shuts itself down (Chesnoy p. 397: 'a specified threshold'); vendor. Study 08 sweeps 1.2, 1.5 and 2.0" }
+overcurrent_trip_delay_s   = { value = "TBD", unit = "s", status = "unknown", source = "how long the current must stay above the trip level before the PFE shuts down; vendor. Study 08 uses 1 s" }
+trip_hold_s                = { value = "TBD", unit = "s", status = "unknown", source = "time from a trip to a restart attempt, including discharge of the cable (resistive, then short, Chesnoy p. 397); operator procedure. Study 08 uses 30 s" }
+restart_ramp_V_per_s       = { value = "TBD", unit = "V/s", status = "unknown", source = "voltage ramp-up rate of a restart; vendor. Study 08 uses 20 V/s" }
+converter_spare_modules    = { value = 1, status = "assumed", source = "N:1 protection (Chesnoy p. 397): one spare module per bank; a vendor catalogue shows 6 modules with 5 needed" }
+converter_failed_modules   = { value = 0, status = "assumed", source = "modules out of service in a what-if; 0 = healthy. Used only when converter_modules and converter_module_rating_V are given" }
+

@@ -1,0 +1,28 @@
+# Ruff configuration (lint). Formatting is not enforced by ruff here; layout is reviewed by hand.
+line-length = 110
+target-version = "py311"
+src = ["src", "tests", "examples"]
+extend-exclude = ["site", "build", "dist", "outputs"]
+
+[lint]
+select = [
+  "E", "W",   # pycodestyle
+  "F",        # pyflakes
+  "I",        # import order
+  "B",        # bugbear
+  "UP",       # pyupgrade
+  "C4",       # comprehensions
+  "SIM",      # simplifications
+  "RUF",      # ruff-specific
+]
+# long lines are mostly source citations in docstrings and are reviewed by hand;
+# RUF001/2/3: we write Greek letters and units in docstrings on purpose
+ignore = ["E501", "RUF001", "RUF002", "RUF003", "SIM108"]
+
+[lint.per-file-ignores]
+"tests/*" = ["B011", "SIM117", "RUF012"]
+"examples/*" = ["E402"]
+"__init__.py" = ["F401"]
+
+[lint.isort]
+known-first-party = ["bolts"]

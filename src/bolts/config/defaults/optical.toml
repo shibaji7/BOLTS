@@ -1,0 +1,19 @@
+# Optical chain and terminal (ported from the pfe_design study; Chesnoy printed pages in the sources).
+[optical]
+laser_threshold_fraction   = { value = 0.2, status = "assumed", source = "pump threshold as a fraction of the nominal laser current; vendor unknown (swept 0, 0.2, 0.4 in pfe_design)" }
+noise_figure_dB            = { value = 4.5, unit = "dB", status = "sourced", source = "Chesnoy Sec. 4.4.5 (printed p. 143): noise figure 4.5 dB in the worked example" }
+output_power_per_channel_dBm = { value = -2.5, unit = "dBm", status = "assumed", source = "repeater output per channel; from the Chesnoy p. 143 example (does not reproduce with its own formula)" }
+fiber_attenuation_dB_per_km = { value = 0.2, unit = "dB/km", status = "sourced", source = "Chesnoy Sec. 5.4.2.2 (printed p. 191)" }
+extra_span_loss_dB         = { value = 0.0, unit = "dB", status = "assumed", source = "splices, connectors, repairs (repairs 3 dB deep water, 0.5 dB shallow, p. 191)" }
+osnr_constant_dB           = { value = 58.0, unit = "dB", status = "sourced", source = "Chesnoy Eq. 5.23 (printed p. 189): OSNR = P_in - 10 log10 k - NF + 58 (P_in = repeater INPUT power per wavelength)" }
+optical_bandwidth_GHz      = { value = 12.5, unit = "GHz", status = "sourced", source = "Chesnoy Sec. 3.4.6 (printed p. 88): 0.1 nm = 12.5 GHz at 1550 nm" }
+baud_rate_GBd              = { value = 25.0, unit = "GBd", status = "sourced", source = "Chesnoy Fig. 5.25 (printed p. 190): theoretical 25 GBd PDM-QPSK transponder (the ITU table implies about 44 GBd)" }
+channel_rate_Gbps          = { value = 100.0, unit = "Gbit/s", status = "assumed", source = "reference channel for the Shannon-gap calibration" }
+penalties_total_dB         = { value = 3.5, unit = "dB", status = "sourced", source = "Chesnoy Table 5.1 (p. 199): 3.5 dB of impairments of the ITU-T G.977 example (10 000 km; conservative for a short link)" }
+terminal_back_to_back_Q_dB = { value = 17.1, unit = "dB", status = "sourced", source = "Chesnoy Table 5.1 (p. 199) line 4; combined by Eq. 5.29 (p. 200)" }
+q2_limit_dB                = { value = 5.0, unit = "dB", status = "sourced", source = "Chesnoy Table 5.1 (p. 199) line 6 'Q limit compliance with ITU after FEC' = 5.0 dB (defined p. 201)" }
+bits_per_symbol_ladder     = { value = [2, 3, 4, 5, 6], status = "sourced", source = "Chesnoy Sec. 5.7.2 (printed pp. 225-227): QPSK 2, 8QAM 3, 16QAM 4, 32QAM 5, 64QAM 6 bits per symbol" }
+relock_time_s              = { value = 10.0, unit = "s", status = "assumed", source = "receiver relock after an outage; not given by Chesnoy (cycle slips corrupt symbols until the next pilot frame, p. 187); vendor. Swept 0 to 30 s in pfe_design" }
+adaptation_delay_s         = { value = 5.0, unit = "s", status = "assumed", source = "outage time before the terminal steps down a format; vendor unknown" }
+upshift_hold_s             = { value = 60.0, unit = "s", status = "assumed", source = "margin must hold this long before stepping back up" }
+switch_margin_dB           = { value = 0.5, unit = "dB", status = "assumed", source = "spare SNR required when stepping to another format" }
