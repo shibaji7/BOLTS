@@ -14,7 +14,7 @@ from bolts.io.readers import read_json, read_series_csv
 def test_public_api_surface():
     for name in ("load_parameters", "load_waveform", "build_network", "run_transient", "assess", "export_spice", "register_element", "Result"):
         assert hasattr(bolts, name) and name in bolts.__all__
-    assert bolts.__version__ == "0.2.2"
+    assert bolts.__version__ == "0.2.3"
 
 
 def test_end_to_end_matches_the_pfe_design_example_summary(params, legacy_record):
@@ -55,7 +55,7 @@ def test_cli_run_params_validate_doctor(tmp_path, capsys):
     assert main(["params", "--filter", "repeater.", "--status", "unknown"]) == 0
     assert "zener_knee_current_A" in capsys.readouterr().out
     assert main(["validate"]) == 0
-    assert main(["doctor"]) == 0 and "bolts 0.2.2" in capsys.readouterr().out
+    assert main(["doctor"]) == 0 and "bolts 0.2.3" in capsys.readouterr().out
 
 
 def test_cli_reports_errors_without_a_traceback(tmp_path, capsys):

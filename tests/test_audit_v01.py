@@ -69,7 +69,7 @@ def test_python_dash_m_bolts_runs(capsys, monkeypatch):
     monkeypatch.setattr(sys, "argv", ["bolts", "doctor"])
     with pytest.raises(SystemExit) as e:
         runpy.run_module("bolts", run_name="__main__")
-    assert e.value.code == 0 and "bolts 0.2.2" in capsys.readouterr().out
+    assert e.value.code == 0 and "bolts 0.2.3" in capsys.readouterr().out
 
 
 def test_physical_constants():
