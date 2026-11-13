@@ -3,6 +3,8 @@
 All notable changes are listed here. Format: [Keep a Changelog](https://keepachangelog.com/), versioning: [SemVer](https://semver.org/).
 
 ## [Unreleased]
+### Changed
+- The landing page of the docs shows the x3 and x4 storm-impact figure (experiment 13) instead of the mild x1 run.
 
 ## [0.2.3] - 2026-11-13
 ### Added

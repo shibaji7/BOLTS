@@ -12,7 +12,7 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 FIG = ROOT / "docs" / "figures"
 # (example script, produced file under outputs/examples/<stem>/, name used in the docs)
-WANTED = [("02_storm_record", "run.png", "storm_run.png"), ("02_storm_record", "node_profile.png", "node_profile.png"),
+WANTED = [("02_storm_record", "run.png", "storm_run.png"), ("02_storm_record", "node_profile.png", "node_profile.png"), ("13_storm_impact", "run.png", "storm_impact.png"),
           ("03_pfe_limit_sweep", "pfe_limit.png", "pfe_limit.png"), ("04_regulator_tau", "regulator_tau.png", "regulator_tau.png"),
           ("05_amplitude_period_map", "amplitude_period_map.png", "amplitude_period_map.png")]
 

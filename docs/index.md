@@ -7,11 +7,12 @@ follow the story. BOLTS models the **stress and vulnerability of submarine power
 units) under **geomagnetic disturbances (GMD / space weather)** first, then lightning and switching surges, and traces the consequences to
 **loss of signal, failures and traffic loss**.
 
-![A voltage record through the whole chain](figures/storm_run.png)
+![The same storm at 3 and 4 times the amplitude, through the whole chain](figures/storm_impact.png)
 
-*Read the picture top to bottom. (a) the voltage the storm puts on the cable; (b) the PFE changes its own voltage to cancel it, until it hits
-its limit; (c) the current at the repeaters follows only what the PFE cannot cancel; (d) the optical margin; (e) what each terminal delivers.
-The record here is synthetic.*
+*Read the pictures top to bottom, left (x3) to right (x4). (a) the voltage the storm puts on the cable; (b) the PFE changes its own voltage to cancel it, until it
+hits its limit; (c) the current at the repeaters follows only what the PFE cannot cancel; (d) the optical margin (clipped at -12 dB, where the light is gone);
+(e) what each terminal delivers. At x3 only the 250G terminal drops out; at x4 the light is lost for about 100 s and every terminal loses traffic.
+The record here is synthetic; the milder x1 case is [experiment 2](examples/02_storm_record.md).*
 
 ```
 induced voltage -> PFE regulator and voltage range -> line current at every repeater -> pump power -> OSNR / Q margin -> terminal rate and traffic
