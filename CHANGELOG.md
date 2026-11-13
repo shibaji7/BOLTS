@@ -3,6 +3,9 @@
 All notable changes are listed here. Format: [Keep a Changelog](https://keepachangelog.com/), versioning: [SemVer](https://semver.org/).
 
 ## [Unreleased]
+
+## [0.2.2] - 2026-11-13
+Documentation release: the Sphinx documentation (API reference, example pages) is part of a tagged version, so `stable` on Read the Docs shows it. No change to the simulation code.
 ### Changed
 - The documentation is built with Sphinx (sphinx-rtd-theme, autosummary, napoleon, viewcode, intersphinx, MyST Markdown) instead of MkDocs, as in GeoPulse: a page per module with a summary table, signatures, parameter tables and `[source]` links, "Edit on GitHub", an htmlzip download. `make docs` builds with warnings as errors; `docs/conf.py` replaces `mkdocs.yml`; the `docs` extra and `docs/requirements.txt` list the Sphinx packages.
 ### Added
