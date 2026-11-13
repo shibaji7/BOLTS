@@ -38,7 +38,7 @@ def storm_backbone(t_s: np.ndarray, source_t_s: np.ndarray, source_V: np.ndarray
 
 
 def coloured_noise(n: int, rng: np.random.Generator, band_s: tuple[float, float], slope: float) -> np.ndarray:
-    """Zero-mean, unit-rms Gaussian noise with |spectrum| ~ f^-slope between the two periods, built in the Fourier domain (1 s sampling)."""
+    """Zero-mean, unit-rms Gaussian noise with ``|spectrum| ~ f^-slope`` between the two periods, built in the Fourier domain (1 s sampling)."""
     f = np.fft.rfftfreq(n, d=1.0)
     amp = np.zeros_like(f)
     inband = (f >= 1.0 / band_s[1]) & (f <= 1.0 / band_s[0])

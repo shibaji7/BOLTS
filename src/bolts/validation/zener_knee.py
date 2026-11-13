@@ -1,9 +1,11 @@
 # SPDX-License-Identifier: LGPL-3.0-or-later
 # Copyright (C) 2026 Shibaji Chakraborty
-"""DC solution of a source through a resistor into a piecewise Zener stack (Newton iteration), checked on its three segments:
+"""DC solution of a source through a resistor into a piecewise Zener stack (Newton iteration), checked on its three segments::
+
     above the knee   I = (V - V_k + rz I_k) / (R + rz)             the stack conducts
     below the knee   I = V / (R + V_k / I_k)                       the stack is off
     reverse          I = V / (R + rz)  (V < 0)                     forward diodes
+
 with V_k = Vz + rz (I_k - I_nom). The knee current ``I_k`` is chosen so that all three segments are visited."""
 from __future__ import annotations
 

@@ -19,8 +19,9 @@ python examples/gmd/12_earthing_gpr.py
 
 The figures and tables are written to `outputs/examples/12_earthing_gpr/`. Source on GitHub: [examples/gmd/12_earthing_gpr.py](https://github.com/shibaji7/BOLTS/blob/main/examples/gmd/12_earthing_gpr.py).
 
-??? note "Full source"
+## Full source
 
-    ```python
-    --8<-- "examples/gmd/12_earthing_gpr.py"
-    ```
+```{literalinclude} ../../examples/gmd/12_earthing_gpr.py
+:language: python
+:linenos:
+```

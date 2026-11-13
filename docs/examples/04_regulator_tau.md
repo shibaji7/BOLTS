@@ -15,8 +15,9 @@ python examples/gmd/04_regulator_tau.py
 
 The figures and tables are written to `outputs/examples/04_regulator_tau/`. Source on GitHub: [examples/gmd/04_regulator_tau.py](https://github.com/shibaji7/BOLTS/blob/main/examples/gmd/04_regulator_tau.py).
 
-??? note "Full source"
+## Full source
 
-    ```python
-    --8<-- "examples/gmd/04_regulator_tau.py"
-    ```
+```{literalinclude} ../../examples/gmd/04_regulator_tau.py
+:language: python
+:linenos:
+```

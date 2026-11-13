@@ -17,8 +17,9 @@ python examples/gmd/10_pfe_overrange.py
 
 The figures and tables are written to `outputs/examples/10_pfe_overrange/`. Source on GitHub: [examples/gmd/10_pfe_overrange.py](https://github.com/shibaji7/BOLTS/blob/main/examples/gmd/10_pfe_overrange.py).
 
-??? note "Full source"
+## Full source
 
-    ```python
-    --8<-- "examples/gmd/10_pfe_overrange.py"
-    ```
+```{literalinclude} ../../examples/gmd/10_pfe_overrange.py
+:language: python
+:linenos:
+```

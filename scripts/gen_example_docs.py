@@ -4,7 +4,7 @@
 """Write one documentation page per experiment (docs/examples/NN_name.md) and an index, from the example scripts' docstrings.
 
 Each page has the experiment's question, input and expectation (its docstring), the figures it produced, how to run it, a link to the source on GitHub
-and the full source (included from the script, so it cannot drift). Figures are copied from ``outputs/examples/<stem>/`` into ``docs/examples/img/`` and
+and the full source (included from the script with ``literalinclude``, so it cannot drift). Figures are copied from ``outputs/examples/<stem>/`` into ``docs/examples/img/`` and
 committed, so the docs build does not need to run the experiments. Run by ``make example-docs`` (which runs the experiments first)."""
 from __future__ import annotations
 
@@ -54,7 +54,7 @@ def page(script: pathlib.Path, images: list[str]) -> str:
     rel = script.relative_to(ROOT).as_posix()
     lines += ["## Run it", "", "```bash", f"python {rel}", "```", "",
               f"The figures and tables are written to `outputs/examples/{script.stem}/`. Source on GitHub: [{rel}]({REPO}/{rel}).", "",
-              '??? note "Full source"', "", "    ```python", f'    --8<-- "{rel}"', "    ```", ""]
+              "## Full source", "", "```{literalinclude} " + f"../../{rel}", ":language: python", ":linenos:", "```", ""]
     return "\n".join(lines)
 
 
@@ -84,6 +84,7 @@ def main() -> None:
              "They need the `plots` extra for figures (`pip install bolts[plots]`) and, for experiment 6, the `ngspice` binary.", "",
              "```bash", "make examples            # run all of them; outputs go to outputs/examples/", "```", "",
              "| Experiment | What it answers |", "|---|---|", *rows, "",
+             "```{toctree}", ":hidden:", ":maxdepth: 1", "", *[s.stem for s in scripts()], "```", "",
              "## Planned", "",
              "Lightning experiments (`examples/lightning/`) and branching-unit experiments (`examples/branching_units/`) are documented slots: see "
              "[Lightning](../chapters/15_lightning.md) and [Branching units](../chapters/14_branching_units.md).", ""]

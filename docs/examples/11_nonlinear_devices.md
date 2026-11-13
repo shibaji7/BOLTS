@@ -17,8 +17,9 @@ python examples/gmd/11_nonlinear_devices.py
 
 The figures and tables are written to `outputs/examples/11_nonlinear_devices/`. Source on GitHub: [examples/gmd/11_nonlinear_devices.py](https://github.com/shibaji7/BOLTS/blob/main/examples/gmd/11_nonlinear_devices.py).
 
-??? note "Full source"
+## Full source
 
-    ```python
-    --8<-- "examples/gmd/11_nonlinear_devices.py"
-    ```
+```{literalinclude} ../../examples/gmd/11_nonlinear_devices.py
+:language: python
+:linenos:
+```

@@ -22,6 +22,24 @@ make examples            # run all of them; outputs go to outputs/examples/
 | [11_nonlinear_devices](11_nonlinear_devices.md) | Experiment 11: the nonlinear devices |
 | [12_earthing_gpr](12_earthing_gpr.md) | Experiment 12: how much does the landing soil matter? |
 
+```{toctree}
+:hidden:
+:maxdepth: 1
+
+01_p2p_baseline
+02_storm_record
+03_pfe_limit_sweep
+04_regulator_tau
+05_amplitude_period_map
+06_spice_crosscheck
+07_swing_onset
+08_pfe_beyond_range_study
+09_cable_properties
+10_pfe_overrange
+11_nonlinear_devices
+12_earthing_gpr
+```
+
 ## Planned
 
 Lightning experiments (`examples/lightning/`) and branching-unit experiments (`examples/branching_units/`) are documented slots: see [Lightning](../chapters/15_lightning.md) and [Branching units](../chapters/14_branching_units.md).

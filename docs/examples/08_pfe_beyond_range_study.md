@@ -18,8 +18,9 @@ python examples/gmd/08_pfe_beyond_range_study.py
 
 The figures and tables are written to `outputs/examples/08_pfe_beyond_range_study/`. Source on GitHub: [examples/gmd/08_pfe_beyond_range_study.py](https://github.com/shibaji7/BOLTS/blob/main/examples/gmd/08_pfe_beyond_range_study.py).
 
-??? note "Full source"
+## Full source
 
-    ```python
-    --8<-- "examples/gmd/08_pfe_beyond_range_study.py"
-    ```
+```{literalinclude} ../../examples/gmd/08_pfe_beyond_range_study.py
+:language: python
+:linenos:
+```

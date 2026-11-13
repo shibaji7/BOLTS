@@ -4,9 +4,10 @@
 
 Repeater (Chesnoy 12.2.2, p. 427; Table 10.1, p. 385): the pump lasers run from a constant-current driver fed by a Zener-regulated
 supply. At the nominal line current I_set it splits 80% laser, 10% control, 10% Zener shunt, so
-  * a LOWER line current is harmless down to 0.9 I_set; below that the laser current falls one for one:
-        I_LD = clip(I_line - I_ctl, 0, I_LD_nom)
-  * a HIGHER line current goes through the Zener shunt (heat, no optical change): I_shunt = I_line - I_LD - I_ctl.
+
+* a LOWER line current is harmless down to 0.9 I_set; below that the laser current falls one for one: ``I_LD = clip(I_line - I_ctl, 0, I_LD_nom)``
+* a HIGHER line current goes through the Zener shunt (heat, no optical change): ``I_shunt = I_line - I_LD - I_ctl``.
+
 Pump power ratio r = (I_LD - I_th) / (I_LD_nom - I_th); a saturated amplifier's output follows it (p. 428). (This is the author's reading
 of the book; the Zener behaviour and the threshold are vendor data.)
 

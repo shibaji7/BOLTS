@@ -21,8 +21,9 @@ python examples/gmd/02_storm_record.py
 
 The figures and tables are written to `outputs/examples/02_storm_record/`. Source on GitHub: [examples/gmd/02_storm_record.py](https://github.com/shibaji7/BOLTS/blob/main/examples/gmd/02_storm_record.py).
 
-??? note "Full source"
+## Full source
 
-    ```python
-    --8<-- "examples/gmd/02_storm_record.py"
-    ```
+```{literalinclude} ../../examples/gmd/02_storm_record.py
+:language: python
+:linenos:
+```

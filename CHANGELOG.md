@@ -3,8 +3,10 @@
 All notable changes are listed here. Format: [Keep a Changelog](https://keepachangelog.com/), versioning: [SemVer](https://semver.org/).
 
 ## [Unreleased]
+### Changed
+- The documentation is built with Sphinx (sphinx-rtd-theme, autosummary, napoleon, viewcode, intersphinx, MyST Markdown) instead of MkDocs, as in GeoPulse: a page per module with a summary table, signatures, parameter tables and `[source]` links, "Edit on GitHub", an htmlzip download. `make docs` builds with warnings as errors; `docs/conf.py` replaces `mkdocs.yml`; the `docs` extra and `docs/requirements.txt` list the Sphinx packages.
 ### Added
-- API reference rework: every subpackage has an introduction, links to its chapters and a module table with stubs flagged; the index lists the public API at a glance; Google-style Args / Returns / Raises sections on the `bolts.api` entry points, `build_network`, `load_parameters` and the `Result` methods; type annotations for them; mkdocstrings shows signatures, source and links to the Python, NumPy and SciPy docs.
+- API reference rework: every subpackage has an introduction, links to its chapters and a module table with stubs flagged; the index lists the public API at a glance; Google-style Args / Returns / Raises sections on the `bolts.api` entry points, `build_network`, `load_parameters` and the `Result` methods; type annotations for them; the pages show signatures and `[source]` links and link into the Python, NumPy and SciPy docs.
 - Examples in the docs: one page per experiment (question, input, expectation, figures, command, full source) under `docs/examples/`, written by `make example-docs` (`scripts/gen_example_docs.py`); `make examples` now runs experiments 10 to 12 too.
 - `tests/test_docstrings.py`: every public function and class has a docstring, the API entry points document their arguments, every subpackage has an introduction.
 

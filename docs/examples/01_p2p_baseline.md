@@ -13,8 +13,9 @@ python examples/gmd/01_p2p_baseline.py
 
 The figures and tables are written to `outputs/examples/01_p2p_baseline/`. Source on GitHub: [examples/gmd/01_p2p_baseline.py](https://github.com/shibaji7/BOLTS/blob/main/examples/gmd/01_p2p_baseline.py).
 
-??? note "Full source"
+## Full source
 
-    ```python
-    --8<-- "examples/gmd/01_p2p_baseline.py"
-    ```
+```{literalinclude} ../../examples/gmd/01_p2p_baseline.py
+:language: python
+:linenos:
+```

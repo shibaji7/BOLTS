@@ -17,8 +17,9 @@ python examples/gmd/03_pfe_limit_sweep.py
 
 The figures and tables are written to `outputs/examples/03_pfe_limit_sweep/`. Source on GitHub: [examples/gmd/03_pfe_limit_sweep.py](https://github.com/shibaji7/BOLTS/blob/main/examples/gmd/03_pfe_limit_sweep.py).
 
-??? note "Full source"
+## Full source
 
-    ```python
-    --8<-- "examples/gmd/03_pfe_limit_sweep.py"
-    ```
+```{literalinclude} ../../examples/gmd/03_pfe_limit_sweep.py
+:language: python
+:linenos:
+```

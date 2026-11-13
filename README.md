@@ -48,7 +48,7 @@ make dev                  # editable install with pytest, ruff, build, twine
 make test
 ```
 
-or `pip install .` in any Python >= 3.11 environment. Optional extras: `plots` (matplotlib), `data` (pandas), `docs` (mkdocs).
+or `pip install .` in any Python >= 3.11 environment. Optional extras: `plots` (matplotlib), `data` (pandas), `docs` (Sphinx).
 `ngspice` (optional, system binary) enables the SPICE cross-check.
 
 ## Quick start
@@ -89,7 +89,7 @@ filter, branching-unit design) are mostly proprietary, so results are scenario r
 | `src/bolts/metrics/`, `impact/`, `damage/` | current dip, headroom, device stress; optics and terminal; damage laws |
 | `src/bolts/earthing/`, `lightning/` | earth formulas now; lightning slots for v0.2 to v0.4 |
 | `src/bolts/spice/`, `validation/`, `studies/`, `plotting/`, `io/` | ngspice export and compare, analytic cases, sweeps, figures, results |
-| `docs/` | Read the Docs site (mkdocs-material) |
+| `docs/` | Read the Docs site (Sphinx, Markdown chapters) |
 | `tests/` | one test file per module group |
 
 ## Develop

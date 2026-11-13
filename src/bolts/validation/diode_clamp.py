@@ -1,7 +1,9 @@
 # SPDX-License-Identifier: LGPL-3.0-or-later
 # Copyright (C) 2026 Shibaji Chakraborty
-"""DC solution of a source through a resistor into a clamp (a piecewise-linear nonlinear shunt), solved by Newton iteration. Above the clamp voltage the node sits at
+"""DC solution of a source through a resistor into a clamp (a piecewise-linear nonlinear shunt), solved by Newton iteration. Above the clamp voltage the node sits at::
+
     v = V_c + (V - V_c) r_on / (R + r_on)        (the clamp and the series resistor divide the excess)
+
 and below it the clamp is off and v = V. Both segments, in both polarities, are checked against these closed forms."""
 from __future__ import annotations
 

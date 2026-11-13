@@ -106,11 +106,12 @@ doc-figures: ## Run the GMD examples and copy the figures used by the docs
 param-table: ## Refresh the parameter table in docs chapter 07
 	$(PY) scripts/gen_param_table.py
 
-docs: ## Build the documentation (mkdocs, strict)
-	$(PY) -m mkdocs build --strict
+docs: ## Build the documentation (Sphinx, warnings are errors)
+	$(PY) scripts/gen_api_docs.py
+	$(PY) -m sphinx -W --keep-going -b html docs docs/_build/html
 
-docs-serve: ## Serve the documentation locally
-	$(PY) -m mkdocs serve
+docs-serve: docs ## Build the documentation and serve it on http://localhost:8000
+	$(PY) -m http.server 8000 --directory docs/_build/html
 
 build: ## Build sdist and wheel
 	$(PY) -m build
@@ -129,7 +130,7 @@ tree: ## Show the package layout
 	@find src/bolts -name '*.py' -not -name '__init__.py' | sed 's|src/||' | sort | awk -F/ '{print "  " $$0}'
 
 clean: ## Remove caches and build output
-	rm -rf build dist .pytest_cache .ruff_cache .coverage coverage.xml htmlcov site $(OUT) src/*.egg-info
+	rm -rf build dist .pytest_cache .ruff_cache .coverage coverage.xml htmlcov site docs/_build docs/api/generated $(OUT) src/*.egg-info
 	find . -name __pycache__ -type d -prune -exec rm -rf {} +
 
 distclean: clean ## clean, and the conda env too

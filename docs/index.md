@@ -76,3 +76,77 @@ Every chapter starts with a status line. **implemented** = code, tests and valid
 | [API reference](api/index.md) | every module's docstring |
 | `src/bolts/config/defaults/*.toml` | **Every parameter**, with value, unit, status and source |
 | `examples/` | **Experiments** you can run and extend |
+
+```{toctree}
+:hidden:
+:maxdepth: 2
+:caption: Start here
+
+user/install
+user/quickstart
+user/cli
+```
+
+```{toctree}
+:hidden:
+:maxdepth: 1
+:caption: The model, chapter by chapter
+
+chapters/00_overview
+chapters/01_storm_to_volts
+chapters/02_power_feeding
+chapters/03_circuit_model
+chapters/04_repeater_and_optics
+chapters/05_terminal_and_traffic
+chapters/06_field_along_the_link
+chapters/07_parameters_and_provenance
+chapters/08_limitations_and_not_implemented
+chapters/09_validation_and_tests
+chapters/10_run_and_extend
+chapters/11_glossary
+chapters/12_cable_properties
+chapters/13_zener_protection
+chapters/14_branching_units
+chapters/15_lightning
+chapters/16_earthing_damage
+```
+
+```{toctree}
+:hidden:
+:maxdepth: 2
+:caption: Examples
+
+examples/index
+```
+
+```{toctree}
+:hidden:
+:maxdepth: 1
+:caption: Developer guide
+
+dev/architecture
+dev/adding_element
+dev/testing
+dev/tooling
+dev/release
+dev/future_microsecond_windows
+```
+
+```{toctree}
+:hidden:
+:maxdepth: 2
+:caption: Reference
+
+api/index
+```
+
+```{toctree}
+:hidden:
+:maxdepth: 1
+:caption: Project
+
+roadmap
+changelog
+references
+user/citing
+```

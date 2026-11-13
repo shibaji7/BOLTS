@@ -14,7 +14,7 @@ Without conda: `pip install .` in Python >= 3.11. Runtime dependencies are only 
 |---|---|---|
 | `bolts[plots]` | matplotlib | `bolts run --plot`, `bolts.plotting` |
 | `bolts[data]` | pandas | `Result.to_dataframe()` (planned) |
-| `bolts[docs]` | mkdocs, mkdocs-material, mkdocstrings | `make docs` |
+| `bolts[docs]` | sphinx, sphinx-rtd-theme, myst-parser | `make docs` |
 | `bolts[dev]` | pytest, pytest-cov, ruff, build, twine | development |
 
 **ngspice** (system binary, optional) enables `bolts spice --run` and `make spice-check`. `bolts doctor` reports what is available.

@@ -17,8 +17,9 @@ python examples/gmd/05_amplitude_period_map.py
 
 The figures and tables are written to `outputs/examples/05_amplitude_period_map/`. Source on GitHub: [examples/gmd/05_amplitude_period_map.py](https://github.com/shibaji7/BOLTS/blob/main/examples/gmd/05_amplitude_period_map.py).
 
-??? note "Full source"
+## Full source
 
-    ```python
-    --8<-- "examples/gmd/05_amplitude_period_map.py"
-    ```
+```{literalinclude} ../../examples/gmd/05_amplitude_period_map.py
+:language: python
+:linenos:
+```

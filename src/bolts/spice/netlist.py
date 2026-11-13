@@ -2,8 +2,7 @@
 # Copyright (C) 2026 Shibaji Chakraborty
 """Export a linear network to an ngspice netlist, so every circuit can be cross-checked by an independent solver.
 
-A series branch a -> b with resistance R, inductance L and sources s(t) becomes, in this order,
-    V(s) from node a to an internal node x1 (v_x1 = v_a + s),  R from x1 to x2,  L from x2 to b.
+A series branch a -> b with resistance R, inductance L and sources s(t) becomes, in this order, a voltage source V(s) from node a to an internal node x1 (v_x1 = v_a + s), R from x1 to x2 and L from x2 to b.
 Exogenous sources are written as piecewise-linear (PWL) tables; the regulator-controlled PFE sources are replayed from the simulated
 ``v_tot(t)``, so the comparison checks the circuit solver (the regulator itself is checked by the analytic tests).
 Nonlinear series branches (the piecewise Zener) become a zero-volt current sensor plus a behavioural voltage source ``B`` whose value is the law's drop as an

@@ -4,7 +4,7 @@
 """Write the API reference pages (docs/api/*.md) from the package layout and its docstrings.
 
 Each subpackage page has the subpackage docstring as its introduction, links to the matching chapters, a table of its modules (one line each, stubs
-flagged) and one mkdocstrings block per module. ``docs/api/index.md`` has the public API at a glance. Run by ``make api-docs``; the generated pages are
+flagged) and an autosummary of its modules (Sphinx writes the page of each module at build time). ``docs/api/index.md`` has the public API at a glance. Run by ``make api-docs``; the generated pages are
 committed so the docs build needs no extra plugin."""
 from __future__ import annotations
 
@@ -83,46 +83,44 @@ def dotted(sub: str, f: pathlib.Path) -> str:
     return f"bolts.{sub + '.' if sub else ''}{f.stem}"
 
 
-def package_page(sub: str) -> str:
-    """The Markdown of one subpackage page."""
+def package_section(sub: str) -> str:
+    """The Markdown of one subpackage section of the API page: introduction, chapters, stubs and an autosummary of its modules."""
     mods = modules(sub)
     intro = doc_of(PKG / sub / "__init__.py") if sub else ""
-    lines = [f"# {TITLES.get(sub, sub)}", ""]
+    lines = [f"## {TITLES.get(sub, sub)}", ""]
     if intro:
         parts = intro.split("\n\n")
         lines += ["\n\n".join(parts[1:]) if len(parts) > 1 else parts[0], ""]
     chapters = CHAPTERS.get(sub, [])
     if chapters:
         lines += ["**Read first:** " + ", ".join(f"[{t}](../chapters/{c}.md)" for c, t in chapters), ""]
-    lines += ["| Module | What it does |", "|---|---|"]
-    for f in mods:
-        doc = doc_of(f)
-        flag = " *(stub)*" if is_stub(doc) else ""
-        lines.append(f"| [`{f.stem}`](#{dotted(sub, f)}) | {first_sentence(doc)}{flag} |")
-    lines.append("")
-    for f in mods:
-        lines += [f"::: {dotted(sub, f)}", "    options:", "      show_root_heading: true", ""]
+    stubs = [f"`{f.stem}`" for f in mods if is_stub(doc_of(f))]
+    if stubs:
+        lines += ["*Stubs (documented slots that raise `NotImplementedYet`):* " + ", ".join(stubs), ""]
+    # an RST directive inside an eval-rst block: autosummary's stub generator only recognises the RST spelling, not the MyST one
+    lines += ["```{eval-rst}", ".. autosummary::", "   :toctree: generated", "   :recursive:", ""]
+    lines += [f"   {dotted(sub, f)}" for f in mods]
+    lines += ["```", ""]
     return "\n".join(lines)
 
 
-def api_functions() -> list[tuple[str, str]]:
-    """The names in ``bolts.api.__all__`` with the first line of their docstring."""
+def api_functions() -> list[tuple[str, str, str]]:
+    """The names in ``bolts.api.__all__`` as (name, dotted path of where they are defined, first line of their docstring)."""
     tree = ast.parse((PKG / "api.py").read_text())
     names: list[str] = []
-    docs: dict[str, str] = {}
+    docs: dict[str, tuple[str, str]] = {}
     for node in tree.body:
         if isinstance(node, ast.Assign) and any(getattr(t, "id", "") == "__all__" for t in node.targets):
             names = [e.value for e in node.value.elts]
         if isinstance(node, ast.FunctionDef):
-            docs[node.name] = ast.get_docstring(node) or ""
-        if isinstance(node, ast.ImportFrom) and node.level == 1 and node.module:      # a re-exported name: take its docstring from where it is defined
+            docs[node.name] = ("bolts.api", ast.get_docstring(node) or "")
+        if isinstance(node, ast.ImportFrom) and node.level == 1 and node.module:      # a re-exported name: document it where it is defined
             src = PKG / (node.module.replace(".", "/") + ".py")
             if src.exists():
                 for sub in ast.parse(src.read_text()).body:
                     if isinstance(sub, (ast.FunctionDef, ast.ClassDef)) and any(a.name == sub.name for a in node.names):
-                        docs[sub.name] = ast.get_docstring(sub) or ""
-    extra = {"Result": "The outcome of a run: the time series, the circuit and the metrics."}
-    return [(n, first_sentence(docs.get(n) or extra.get(n, "")).replace("``", "`")) for n in names]
+                        docs[sub.name] = (f"bolts.{node.module}", ast.get_docstring(sub) or "")
+    return [(n, docs[n][0], first_sentence(docs[n][1]).replace("``", "`")) for n in names]
 
 
 INDEX_HEAD = """# API reference
@@ -146,32 +144,27 @@ summary = bolts.assess(result)                                    # electrical, 
 
 
 def main() -> None:
-    """Regenerate every page in docs/api."""
+    """Regenerate docs/api/index.md (Sphinx autosummary writes the per-module pages at build time)."""
     OUT.mkdir(parents=True, exist_ok=True)
     for old in OUT.glob("*.md"):
         old.unlink()
     subs = ["", *sorted(p.name for p in PKG.iterdir() if p.is_dir() and not p.name.startswith("_") and (p / "__init__.py").exists())]
-    index = [INDEX_HEAD]
-    for name, summary in api_functions():
-        index.append(f"| [`{name}`](core.md#bolts.api) | {summary} |")
-    index += ["", "## By subpackage", "",
-              "Each page opens with what the subpackage is for, the chapters that explain it, a table of its modules (stubs are flagged) and the full reference.", "",
-              "| Subpackage | Modules | Purpose |", "|---|---|---|"]
+    out = [INDEX_HEAD]
+    for name, where, summary in api_functions():
+        role = "py:class" if name[0].isupper() else "py:func"
+        out.append(f"| {{{role}}}`{name} <{where}.{name}>` | {summary} |")
+    out += ["", "Each section below opens with what the subpackage is for and the chapters that explain it. Click a module for its page: a summary table of its classes and",
+            "functions, then every entry with its signature, parameters, return value and a `[source]` link.", ""]
     for sub in subs:
-        mods = modules(sub)
-        if not mods:
-            continue
-        name = sub or "core"
-        (OUT / f"{name}.md").write_text(package_page(sub))
-        purpose = first_sentence(doc_of(PKG / sub / "__init__.py")) if sub else "The API, the result object, the registry, units, constants and errors."
-        index.append(f"| [{TITLES.get(sub, sub)}]({name}.md) | {len(mods)} | {purpose} |")
-    index += ["", "## Conventions", "",
-              "- Quantities carry their unit in the name (`r_ohm_per_km`, `dt_s`, `v_tot_V`); no unit objects are used.",
-              "- Every parameter is a `Param` with a status (`sourced`, `assumed`, `unknown`, `override`); using an `unknown` one raises `MissingParameter`.",
-              "- Stubs raise `NotImplementedYet` with a pointer to the roadmap and are flagged *(stub)* in the module tables.",
-              "- Equations and sources are in each module docstring; the chapters give the story around them.", ""]
-    (OUT / "index.md").write_text("\n".join(index))
-    print(f"wrote {len(list(OUT.glob('*.md')))} pages in {OUT}")
+        if modules(sub):
+            out.append(package_section(sub))
+    out += ["## Conventions", "",
+            "- Quantities carry their unit in the name (`r_ohm_per_km`, `dt_s`, `v_tot_V`); no unit objects are used.",
+            "- Every parameter is a `Param` with a status (`sourced`, `assumed`, `unknown`, `override`); using an `unknown` one raises `MissingParameter`.",
+            "- Stubs raise `NotImplementedYet` with a pointer to the roadmap.",
+            "- Equations and sources are in each module docstring; the chapters give the story around them.", ""]
+    (OUT / "index.md").write_text("\n".join(out))
+    print(f"wrote {OUT / 'index.md'}")
 
 
 if __name__ == "__main__":

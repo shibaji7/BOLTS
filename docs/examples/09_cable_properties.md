@@ -24,8 +24,9 @@ python examples/gmd/09_cable_properties.py
 
 The figures and tables are written to `outputs/examples/09_cable_properties/`. Source on GitHub: [examples/gmd/09_cable_properties.py](https://github.com/shibaji7/BOLTS/blob/main/examples/gmd/09_cable_properties.py).
 
-??? note "Full source"
+## Full source
 
-    ```python
-    --8<-- "examples/gmd/09_cable_properties.py"
-    ```
+```{literalinclude} ../../examples/gmd/09_cable_properties.py
+:language: python
+:linenos:
+```

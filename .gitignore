@@ -49,7 +49,7 @@ cover/
 # Documentation
 site/
 docs/_build/
-/docs/api/.cache/
+docs/api/generated/
 
 # Type checkers and linters
 .mypy_cache/

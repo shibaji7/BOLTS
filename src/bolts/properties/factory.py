@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: LGPL-3.0-or-later
 # Copyright (C) 2026 Shibaji Chakraborty
 """Pick the cable-property provider from the ``[cable]`` parameters, so a TOML file, ``--set`` on the command line or ``load_parameters(overrides=...)``
-can select a section table, a depth profile and the temperature model without any Python.
+can select a section table, a depth profile and the temperature model without any Python::
 
     cable.section_table_csv    "none" | path   per-section R, C, G, L (see ``SectionTableRLCG``); "none" keeps the constant per-km values
     cable.depth_profile_csv    "none" | path   columns x_km, depth_m (see ``DepthProfileRLCG``)

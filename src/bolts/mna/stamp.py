@@ -3,8 +3,10 @@
 """Stamps for modified nodal analysis (MNA).
 
 Unknowns: the node voltages (ground is the sea, potential 0, index -1) followed by one current per *series branch*.
-A series branch from node ``a`` to node ``b`` carries the current ``i`` (a -> b) and obeys
+A series branch from node ``a`` to node ``b`` carries the current ``i`` (a -> b) and obeys::
+
     v_a - v_b + s(t) = R i + L di/dt        (s = the sum of its sources; a source adds to the voltage that pushes the current)
+
 so a cable span with a geoelectric EMF, a repeater with a Zener drop and a PFE with its earth resistance are all one kind of branch.
 Shunt elements (conductance, capacitance) connect nodes; independent current sources inject into nodes.
 """

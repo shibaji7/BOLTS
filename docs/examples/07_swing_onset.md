@@ -17,8 +17,9 @@ python examples/gmd/07_swing_onset.py
 
 The figures and tables are written to `outputs/examples/07_swing_onset/`. Source on GitHub: [examples/gmd/07_swing_onset.py](https://github.com/shibaji7/BOLTS/blob/main/examples/gmd/07_swing_onset.py).
 
-??? note "Full source"
+## Full source
 
-    ```python
-    --8<-- "examples/gmd/07_swing_onset.py"
-    ```
+```{literalinclude} ../../examples/gmd/07_swing_onset.py
+:language: python
+:linenos:
+```

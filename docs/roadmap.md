@@ -1,3 +1,2 @@
-# Roadmap
-
---8<-- "ROADMAP.md"
+```{include} ../ROADMAP.md
+```
