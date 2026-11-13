@@ -3,7 +3,7 @@ message: "If you use BOLTS, please cite it."
 title: "BOLTS: Branching-unit and Optical-repeater power-feed Loop Transient Simulator"
 abstract: "Stress and vulnerability of submarine power-feed systems under geomagnetic disturbances (GMD / space weather), lightning and switching surges, down to loss of signal, failures and traffic loss."
 type: software
-version: 0.2.0
+version: 0.2.1
 date-released: 2026-11-11
 license: LGPL-3.0-or-later
 authors:
