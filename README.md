@@ -6,11 +6,24 @@ BOLTS models the **stress and vulnerability of submarine power-feed systems** (t
 units) under **geomagnetic disturbances (GMD / space weather)** first, then lightning and switching surges, and traces the
 consequences to **loss of signal, failures and traffic loss**.
 
+[![tests](https://github.com/shibaji7/BOLTS/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/shibaji7/BOLTS/actions/workflows/tests.yml)
+[![build](https://github.com/shibaji7/BOLTS/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/shibaji7/BOLTS/actions/workflows/build.yml)
+[![docs](https://github.com/shibaji7/BOLTS/actions/workflows/docs.yml/badge.svg?branch=main)](https://github.com/shibaji7/BOLTS/actions/workflows/docs.yml)
+[![Docs](https://readthedocs.org/projects/bolts/badge/?version=latest)](https://bolts.readthedocs.io/en/latest/)
+[![PyPI](https://img.shields.io/pypi/v/bolts.svg)](https://pypi.org/project/bolts/)
+[![Python versions](https://img.shields.io/pypi/pyversions/bolts.svg)](https://pypi.org/project/bolts/)
+[![codecov](https://codecov.io/gh/shibaji7/BOLTS/branch/main/graph/badge.svg)](https://codecov.io/gh/shibaji7/BOLTS)
 [![License: LGPL v3+](https://img.shields.io/badge/license-LGPL--3.0--or--later-blue.svg)](LICENSE)
-[![Python](https://img.shields.io/badge/python-3.11%2B-informational.svg)](pyproject.toml)
-[![status](https://img.shields.io/badge/status-alpha%20v0.1-orange.svg)](ROADMAP.md)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![Roadmap](https://img.shields.io/badge/roadmap-published-blue)](ROADMAP.md)
+[![status](https://img.shields.io/badge/status-alpha%20v0.2-orange.svg)](ROADMAP.md)
+[![Last commit](https://img.shields.io/github/last-commit/shibaji7/BOLTS)](https://github.com/shibaji7/BOLTS/commits/main)
+[![Issues](https://img.shields.io/github/issues/shibaji7/BOLTS)](https://github.com/shibaji7/BOLTS/issues)
 
-> Status: **v0.1 (alpha)**. Point-to-point GMD is implemented and validated; branching units, nonlinear protection devices and
+**[📖 Documentation](https://bolts.readthedocs.io/) · [📦 PyPI](https://pypi.org/project/bolts/) · [🐙 GitHub](https://github.com/shibaji7/BOLTS) · [🐛 Issues](https://github.com/shibaji7/BOLTS/issues) · [📜 Changelog](CHANGELOG.md) · [🗺️ Roadmap](ROADMAP.md)**
+
+> Status: **v0.2 (alpha)**. Point-to-point GMD, PFE over-range stress, nonlinear protection devices (Newton solver) and earthing are implemented and validated; branching units and
 > lightning are documented slots that raise `NotImplementedYet` (see the [roadmap](ROADMAP.md)).
 
 ## What it does
