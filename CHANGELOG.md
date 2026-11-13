@@ -3,6 +3,8 @@
 All notable changes are listed here. Format: [Keep a Changelog](https://keepachangelog.com/), versioning: [SemVer](https://semver.org/).
 
 ## [Unreleased]
+### Added
+- Experiment 13 (`examples/gmd/13_storm_impact.py`): the example storm at 3 and 4 times the amplitude, so the Q margin and the delivered rate actually move; `bolts.plotting.timeseries.plot_compare` draws runs side by side; the Q-margin panel of every run figure is clipped at -12 dB (the "no light" floor no longer stretches the axis); a section in chapter 02.
 
 ## [0.2.2] - 2026-11-13
 Documentation release: the Sphinx documentation (API reference, example pages) is part of a tagged version, so `stable` on Read the Docs shows it. No change to the simulation code.

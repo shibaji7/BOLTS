@@ -38,6 +38,16 @@ def test_plot_result(params, example_record, tmp_path):
     assert plot_result(res, tmp_path / "p.png").exists()
 
 
+def test_plot_compare_two_strengths_clips_the_q_margin(tmp_path):
+    pytest.importorskip("matplotlib")
+    from bolts.plotting.timeseries import plot_compare
+    runs = []
+    for scale in (1.0, 6.0):      # 6x the example storm against a 1.5 kV limit puts the light out, so the Q-margin clip is drawn
+        p = bolts.load_parameters(overrides={"pfe.max_voltage_kV_per_end": 0.75, "forcing.scale": scale})
+        runs.append(bolts.run_transient(bolts.build_network(p, bolts.load_waveform(params=p)), p))
+    assert plot_compare(runs, ["x1", "x6"], tmp_path / "c.png").exists()
+
+
 def test_plot_without_matplotlib_gives_a_clear_message(monkeypatch):
     import builtins
     real = builtins.__import__

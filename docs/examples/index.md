@@ -21,6 +21,7 @@ make examples            # run all of them; outputs go to outputs/examples/
 | [10_pfe_overrange](10_pfe_overrange.md) | Experiment 10: the PFE beyond its range, with the full circuit |
 | [11_nonlinear_devices](11_nonlinear_devices.md) | Experiment 11: the nonlinear devices |
 | [12_earthing_gpr](12_earthing_gpr.md) | Experiment 12: how much does the landing soil matter? |
+| [13_storm_impact](13_storm_impact.md) | Experiment 13: a storm that does reach the light and the traffic |
 
 ```{toctree}
 :hidden:
@@ -38,6 +39,7 @@ make examples            # run all of them; outputs go to outputs/examples/
 10_pfe_overrange
 11_nonlinear_devices
 12_earthing_gpr
+13_storm_impact
 ```
 
 ## Planned

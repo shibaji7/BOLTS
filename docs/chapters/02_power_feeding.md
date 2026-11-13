@@ -87,6 +87,21 @@ So the choice is between heat in the repeaters (ride through) and loss of servic
 The slow-storm table of study 08 is reproduced by the full circuit (for example -2 kV at the 1.5 kV what-if: -2361 mA; +3 kV at either limit: +1924 mA, 2.92 times the
 set current, Zener heat 20 times nominal).
 
+### When a storm reaches the light and the traffic
+
+Experiment 2 (the shipped record, peak about -200 V) is the mild case: the PFE reaches its 1.5 kV limit but the Q margin stays near 10.7 dB and no terminal loses
+traffic. `examples/gmd/13_storm_impact.py` runs the same record at 3 and 4 times the amplitude against the same limit
+(see [the example page](../examples/13_storm_impact.md)):
+
+| Record | Peak induced | Repeater current down to | Q margin down to | 250G availability (adaptive / fixed) | Lost (250G adaptive) |
+|---|---|---|---|---|---|
+| x1 (experiment 2) | -200 V | -156 mA | 10.7 dB | 100% / 100% | 0 |
+| x3 | -596 V | -642 mA | 7.0 dB | 98.0% / 82.7% | 38 Tbit |
+| x4 | -794 V | -885 mA | light lost for about 100 s | 87.0% / 75.3% | 116 Tbit |
+
+The 250G terminal, which needs the most OSNR, is hit first; at x4 even 100G loses 9.8% of the window. The Q-margin panel is clipped at -12 dB, where the light is gone.
+These are scenario results for a storm the 1.5 kV what-if cannot absorb, not predictions.
+
 ## Where it lives in the code
 
 | Item | Location |
