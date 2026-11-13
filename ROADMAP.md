@@ -10,6 +10,20 @@ Status key: **done** = implemented and tested, **slot** = module exists and rais
 | v0.4 | thunderstorm statistics and Monte Carlo (flash density, peak-current distribution, exceedance curves), protection staging, `damage` criteria (insulation withstand, I2t, arrester energy) | slot |
 | v0.5 | frequency-dependent cable (skin effect, dielectric dispersion), impulse earth impedance with soil ionisation, electro-thermal Zener, converter failover | slot |
 | v1.0 | validation report, API freeze, full documentation, PyPI release | later |
+| v1.x (research) | high-density repeaters of the Petal class (a single-housing repeater amplifying 96 cores of 2-core multi-core fibre with shared pumps, PFE rated up to 18 kV, single-end feeding): a repeater model with a configurable amplifier count and pump budget, and the effect on the Zener shunt, the repeater voltage drop and the current margin | research |
+
+## Research (after v1.0)
+
+**Petal-class repeaters.** Meta's Petal cable (about 7,000 km between the United States and France, 24 fibre pairs of 2-core multi-core fibre, in service 2029)
+uses a single-housing repeater that amplifies 96 fibre cores (24 pairs x 2 cores x 2 directions), with fan-in/fan-out couplers and an SDM pump-sharing architecture,
+within power-feeding equipment "rated up to 18 kV" (a ceiling that avoids requalifying the subsea equipment, not an operating voltage). The partners describe the repeater as having
+reduced power consumption and aiming at **single-end feeding**. Sources: the Meta Engineering post "Inside Petal" and the joint Meta, NEC and Sumitomo Electric press release
+of September 2026. These are announcements, not datasheets.
+
+We plan a repeater element with a configurable amplifier count and pump budget, and a study of single-end feeding under a storm (BOLTS has a single-end power mode; with one PFE the regulation
+and the voltage budget change). This is **research in progress, not implemented**: the public material gives no repeater count or spacing, set current,
+repeater voltage, pump count or pump power, nor whether the 18 kV applies per end or in total, so every value stays `unknown` (sweep ranges only) until vendor data exist, and
+nothing is added to the model before then. The design will be generic (an N-amplifier repeater with shared pumps), not tied to one vendor or cable name.
 
 ## Open questions that block data-driven work
 

@@ -4,6 +4,7 @@ All notable changes are listed here. Format: [Keep a Changelog](https://keepacha
 
 ## [Unreleased]
 ### Changed
+- Roadmap: a research item after v1.0 for Petal-class high-density repeaters (configurable amplifier count and pump budget) and single-end feeding under a storm, sourced to Meta's engineering post and the joint release; not implemented, parameters stay unknown until vendor data exist.
 - The landing page of the docs shows the x3 and x4 storm-impact figure (experiment 13) instead of the mild x1 run.
 
 ## [0.2.3] - 2026-11-13
