@@ -14,12 +14,22 @@ _LOADED = False
 
 
 def register_element(name: str, factory: Callable[..., Any]) -> None:
-    """Register an element factory under ``name`` (a class or a function returning an element)."""
+    """Register an element factory under ``name`` so a network can create it by name (see "Adding an element" in the developer guide).
+
+    Args:
+        name: The registry key. A built-in of the same name wins over a plugin.
+        factory: A class or a function returning an object with ``stamp(stamper)``.
+    """
     _ELEMENTS[name] = factory
 
 
 def register_waveform(name: str, factory: Callable[..., Any]) -> None:
-    """Register a waveform factory under ``name`` (a function returning a :class:`~bolts.waveforms.base.Record`)."""
+    """Register a waveform factory under ``name``.
+
+    Args:
+        name: The registry key (for example ``"double_exp"``).
+        factory: A function returning a :class:`~bolts.waveforms.base.Record`.
+    """
     _WAVEFORMS[name] = factory
 
 

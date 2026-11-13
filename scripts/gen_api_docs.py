@@ -1,11 +1,14 @@
 #!/usr/bin/env python
 # SPDX-License-Identifier: LGPL-3.0-or-later
 # Copyright (C) 2026 Shibaji Chakraborty
-"""Write one API page per subpackage (docs/api/<subpackage>.md) with a mkdocstrings block for each module.
+"""Write the API reference pages (docs/api/*.md) from the package layout and its docstrings.
 
-Run by ``make api-docs``; the generated pages are committed so the docs build needs no extra plugin."""
+Each subpackage page has the subpackage docstring as its introduction, links to the matching chapters, a table of its modules (one line each, stubs
+flagged) and one mkdocstrings block per module. ``docs/api/index.md`` has the public API at a glance. Run by ``make api-docs``; the generated pages are
+committed so the docs build needs no extra plugin."""
 from __future__ import annotations
 
+import ast
 import pathlib
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -21,40 +24,153 @@ TITLES = {"": "Top level", "config": "config: parameters with provenance", "wave
           "plotting": "plotting: figures in the paper style", "studies": "studies: sweeps and maps",
           "validation": "validation: analytic cases"}
 
+# the chapters that explain each subpackage (file name, title)
+CHAPTERS = {
+    "": [("00_overview", "Overview"), ("10_run_and_extend", "Run and extend")],
+    "config": [("07_parameters_and_provenance", "Parameters and provenance")],
+    "waveforms": [("01_storm_to_volts", "From storm to volts")],
+    "space_weather": [("01_storm_to_volts", "From storm to volts"), ("06_field_along_the_link", "Field along the link")],
+    "properties": [("12_cable_properties", "Cable properties")],
+    "elements": [("13_zener_protection", "Zener and protection"), ("04_repeater_and_optics", "Repeater and optics"), ("02_power_feeding", "Power feeding")],
+    "network": [("03_circuit_model", "The circuit model"), ("14_branching_units", "Branching units")],
+    "mna": [("03_circuit_model", "The circuit model")],
+    "lines": [("03_circuit_model", "The circuit model")],
+    "earthing": [("16_earthing_damage", "Earthing and damage")],
+    "lightning": [("15_lightning", "Lightning")],
+    "metrics": [("02_power_feeding", "Power feeding"), ("04_repeater_and_optics", "Repeater and optics")],
+    "damage": [("16_earthing_damage", "Earthing and damage")],
+    "impact": [("04_repeater_and_optics", "Repeater and optics"), ("05_terminal_and_traffic", "Terminal and traffic")],
+    "spice": [("09_validation_and_tests", "Validation and tests")],
+    "io": [("10_run_and_extend", "Run and extend")],
+    "plotting": [("10_run_and_extend", "Run and extend")],
+    "studies": [("10_run_and_extend", "Run and extend")],
+    "validation": [("09_validation_and_tests", "Validation and tests")],
+}
+STUB_WORDS = ("planned", "deferred", "not implemented")
 
-def modules(sub: str) -> list[str]:
+
+def doc_of(path: pathlib.Path) -> str:
+    """The module docstring of a Python file ('' if none)."""
+    return ast.get_docstring(ast.parse(path.read_text())) or ""
+
+
+def first_sentence(doc: str) -> str:
+    """The first line of a docstring, shortened to a table cell."""
+    line = doc.strip().splitlines()[0].strip() if doc.strip() else ""
+    line = line.replace("|", "\\|")
+    return line if len(line) <= 150 else line[:147].rstrip() + "..."
+
+
+def is_stub(doc: str) -> bool:
+    """A module whose first words say it is planned, deferred or not implemented."""
+    head = " ".join(doc.split()[:40]).lower()
+    return any(w in head for w in STUB_WORDS)
+
+
+def modules(sub: str) -> list[pathlib.Path]:
+    """The public module files of a subpackage (or of the top level), sorted by name."""
     base = PKG / sub if sub else PKG
-    pattern = "*.py"
-    mods = []
-    for f in sorted(base.glob(pattern)):
-        if f.name.startswith("_") and f.name != "__init__.py":
+    out = []
+    for f in sorted(base.glob("*.py")):
+        if f.name.startswith("_") or (not sub and f.name == "__main__.py"):
             continue
-        if f.name == "__init__.py":
-            continue
-        if not sub and f.name in {"__main__.py"}:
-            continue
-        mods.append(f"bolts.{sub + '.' if sub else ''}{f.stem}")
-    return mods
+        out.append(f)
+    return out
+
+
+def dotted(sub: str, f: pathlib.Path) -> str:
+    """Dotted module name of a file."""
+    return f"bolts.{sub + '.' if sub else ''}{f.stem}"
+
+
+def package_page(sub: str) -> str:
+    """The Markdown of one subpackage page."""
+    mods = modules(sub)
+    intro = doc_of(PKG / sub / "__init__.py") if sub else ""
+    lines = [f"# {TITLES.get(sub, sub)}", ""]
+    if intro:
+        parts = intro.split("\n\n")
+        lines += ["\n\n".join(parts[1:]) if len(parts) > 1 else parts[0], ""]
+    chapters = CHAPTERS.get(sub, [])
+    if chapters:
+        lines += ["**Read first:** " + ", ".join(f"[{t}](../chapters/{c}.md)" for c, t in chapters), ""]
+    lines += ["| Module | What it does |", "|---|---|"]
+    for f in mods:
+        doc = doc_of(f)
+        flag = " *(stub)*" if is_stub(doc) else ""
+        lines.append(f"| [`{f.stem}`](#{dotted(sub, f)}) | {first_sentence(doc)}{flag} |")
+    lines.append("")
+    for f in mods:
+        lines += [f"::: {dotted(sub, f)}", "    options:", "      show_root_heading: true", ""]
+    return "\n".join(lines)
+
+
+def api_functions() -> list[tuple[str, str]]:
+    """The names in ``bolts.api.__all__`` with the first line of their docstring."""
+    tree = ast.parse((PKG / "api.py").read_text())
+    names: list[str] = []
+    docs: dict[str, str] = {}
+    for node in tree.body:
+        if isinstance(node, ast.Assign) and any(getattr(t, "id", "") == "__all__" for t in node.targets):
+            names = [e.value for e in node.value.elts]
+        if isinstance(node, ast.FunctionDef):
+            docs[node.name] = ast.get_docstring(node) or ""
+        if isinstance(node, ast.ImportFrom) and node.level == 1 and node.module:      # a re-exported name: take its docstring from where it is defined
+            src = PKG / (node.module.replace(".", "/") + ".py")
+            if src.exists():
+                for sub in ast.parse(src.read_text()).body:
+                    if isinstance(sub, (ast.FunctionDef, ast.ClassDef)) and any(a.name == sub.name for a in node.names):
+                        docs[sub.name] = ast.get_docstring(sub) or ""
+    extra = {"Result": "The outcome of a run: the time series, the circuit and the metrics."}
+    return [(n, first_sentence(docs.get(n) or extra.get(n, "")).replace("``", "`")) for n in names]
+
+
+INDEX_HEAD = """# API reference
+
+The whole study fits in a handful of functions, `bolts.api`, all re-exported from `bolts`:
+
+```python
+import bolts
+
+params = bolts.load_parameters()                                   # shipped defaults, every value with unit, status and source
+record = bolts.load_waveform("data/example_vind_1s.csv", params=params)
+net = bolts.build_network(params, record)
+result = bolts.run_transient(net, params)
+summary = bolts.assess(result)                                    # electrical, optical and traffic metrics
+```
+
+## Public API at a glance
+
+| Name | What it does |
+|---|---|"""
 
 
 def main() -> None:
+    """Regenerate every page in docs/api."""
     OUT.mkdir(parents=True, exist_ok=True)
     for old in OUT.glob("*.md"):
         old.unlink()
-    subs = ["", *sorted(p.name for p in PKG.iterdir() if p.is_dir() and not p.name.startswith(("_", "__")) and (p / "__init__.py").exists())]
-    index = ["# API reference", "", "The public API is `bolts.api` (re-exported from `bolts`). Every module has its own entry below, grouped by subpackage; "
-             "the generated pages are produced by `make api-docs` from the docstrings.", "", "| Subpackage | Modules |", "|---|---|"]
+    subs = ["", *sorted(p.name for p in PKG.iterdir() if p.is_dir() and not p.name.startswith("_") and (p / "__init__.py").exists())]
+    index = [INDEX_HEAD]
+    for name, summary in api_functions():
+        index.append(f"| [`{name}`](core.md#bolts.api) | {summary} |")
+    index += ["", "## By subpackage", "",
+              "Each page opens with what the subpackage is for, the chapters that explain it, a table of its modules (stubs are flagged) and the full reference.", "",
+              "| Subpackage | Modules | Purpose |", "|---|---|---|"]
     for sub in subs:
         mods = modules(sub)
         if not mods:
             continue
         name = sub or "core"
-        lines = [f"# {TITLES.get(sub, sub)}", ""]
-        for m in mods:
-            lines += [f"::: {m}", "    options:", "      show_root_heading: true", ""]
-        (OUT / f"{name}.md").write_text("\n".join(lines))
-        index.append(f"| [{TITLES.get(sub, sub)}]({name}.md) | {len(mods)} |")
-    (OUT / "index.md").write_text("\n".join(index) + "\n")
+        (OUT / f"{name}.md").write_text(package_page(sub))
+        purpose = first_sentence(doc_of(PKG / sub / "__init__.py")) if sub else "The API, the result object, the registry, units, constants and errors."
+        index.append(f"| [{TITLES.get(sub, sub)}]({name}.md) | {len(mods)} | {purpose} |")
+    index += ["", "## Conventions", "",
+              "- Quantities carry their unit in the name (`r_ohm_per_km`, `dt_s`, `v_tot_V`); no unit objects are used.",
+              "- Every parameter is a `Param` with a status (`sourced`, `assumed`, `unknown`, `override`); using an `unknown` one raises `MissingParameter`.",
+              "- Stubs raise `NotImplementedYet` with a pointer to the roadmap and are flagged *(stub)* in the module tables.",
+              "- Equations and sources are in each module docstring; the chapters give the story around them.", ""]
+    (OUT / "index.md").write_text("\n".join(index))
     print(f"wrote {len(list(OUT.glob('*.md')))} pages in {OUT}")
 
 

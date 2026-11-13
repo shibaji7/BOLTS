@@ -22,7 +22,7 @@ ifeq ($(NO_COLOR),)
 endif
 
 .DEFAULT_GOAL := help
-.PHONY: help banner env install dev test cov lint fmt dupes spdx changelog-check pre-commit pre-commit-install qa api-docs doc-figures docs docs-serve build check publish-test publish spice-check examples tree validate doctor clean distclean
+.PHONY: help banner env install dev test cov lint fmt dupes spdx changelog-check pre-commit pre-commit-install qa api-docs example-docs doc-figures docs docs-serve build check publish-test publish spice-check examples tree validate doctor clean distclean
 
 help: banner ## Show this list
 	@printf "$(CB)Usage:$(C0) make $(CC)<target>$(C0)\n\n"
@@ -92,10 +92,13 @@ doctor: ## Check the installation
 	$(PY) -m bolts doctor
 
 examples: ## Run the GMD experiments (examples/gmd)
-	@for f in examples/gmd/0*.py; do printf "$(CC)%s$(C0)\n" $$f; $(PY) $$f || exit 1; done
+	@for f in examples/gmd/[0-9]*.py; do printf "$(CC)%s$(C0)\n" $$f; $(PY) $$f || exit 1; done
 
 api-docs: ## Regenerate the API reference pages from the package layout
 	$(PY) scripts/gen_api_docs.py
+
+example-docs: examples ## Run the experiments, then write docs/examples/ (pages and figures)
+	$(PY) scripts/gen_example_docs.py
 
 doc-figures: ## Run the GMD examples and copy the figures used by the docs
 	$(PY) scripts/make_doc_figures.py

@@ -50,7 +50,9 @@ class Source(Protocol):
 
     dynamic: bool
 
-    def values(self, t_s: np.ndarray) -> np.ndarray: ...
+    def values(self, t_s: np.ndarray) -> np.ndarray:
+        """The source's value (V or A) at each time in ``t_s``."""
+        ...
 
 
 @dataclass
@@ -84,7 +86,8 @@ class ControlledSource:
     v: float = 0.0
     dynamic: bool = True
 
-    def values(self, t_s):                                   # not used for exogenous right-hand sides
+    def values(self, t_s):
+        """A constant source: the same value at every time (not used for exogenous right-hand sides)."""
         return np.full(len(t_s), self.weight * self.v)
 
 

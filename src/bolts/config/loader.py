@@ -43,10 +43,27 @@ def _read(path: pathlib.Path) -> dict[str, Any]:
 
 
 def load_parameters(path: str | pathlib.Path | None = None, overrides: dict[str, Any] | None = None) -> ParameterSet:
-    """Shipped defaults, then the optional user TOML ``path``, then ``overrides`` ({"section.name": value}).
+    """Load the parameter set: shipped defaults, then an optional user TOML file, then explicit overrides.
 
-    In a user file a parameter may be a full table (``{value, unit, status, source}``) or a bare value, which becomes an
-    ``override``. Unknown (TBD) parameters stay unknown until somebody supplies them."""
+    In a user file a parameter may be a full table (``{value, unit, status, source}``) or a bare value, which becomes an ``override``. Unknown (TBD)
+    parameters stay unknown until somebody supplies them; using one raises :class:`~bolts.errors.MissingParameter` with the reason.
+
+    Args:
+        path: A user TOML file merged over the defaults. A key that does not exist in the defaults is an error (a typo, not a new setting).
+        overrides: ``{"section.name": value}`` applied last, for example ``{"pfe.max_voltage_kV_per_end": 2.5}``.
+
+    Returns:
+        A :class:`~bolts.config.schema.ParameterSet` (sections of :class:`~bolts.config.provenance.Param`) with ``get``, ``has`` and ``fingerprint``.
+
+    Raises:
+        ConfigError: The file does not exist or cannot be parsed, a key or section is not in the defaults, or a parameter table lacks ``value``, ``status``
+            or ``source``.
+
+    Example:
+        >>> params = load_parameters(overrides={"pfe.max_voltage_kV_per_end": 2.5})  # doctest: +SKIP
+        >>> params.get("pfe", "max_voltage_kV_per_end")  # doctest: +SKIP
+        2.5
+    """
     data: dict[str, dict[str, Param]] = {}
     # layer 1: every shipped defaults file (one per topic: cable, repeater, pfe, ...)
     for f in sorted(DEFAULTS_DIR.glob("*.toml")):

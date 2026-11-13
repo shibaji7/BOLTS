@@ -16,13 +16,30 @@ plugins:
       handlers:
         python:
           paths: [src]
+          inventories:
+            - https://docs.python.org/3/objects.inv
+            - https://numpy.org/doc/stable/objects.inv
+            - https://docs.scipy.org/doc/scipy/objects.inv
           options:
             show_root_heading: true
-            show_source: false
+            show_root_full_path: true
+            show_source: true
             members_order: source
             docstring_style: google
+            docstring_section_style: table
+            show_signature_annotations: true
+            separate_signature: true
+            signature_crossrefs: true
+            show_symbol_type_heading: true
+            show_symbol_type_toc: true
+            merge_init_into_class: true
+            group_by_category: true
+            show_if_no_docstring: false
+            filters: ["!^_"]
+            heading_level: 2
 markdown_extensions:
   - admonition
+  - pymdownx.details
   - attr_list
   - tables
   - toc:
@@ -56,6 +73,20 @@ nav:
       - 14 Branching units: chapters/14_branching_units.md
       - 15 Lightning: chapters/15_lightning.md
       - 16 Earthing and damage: chapters/16_earthing_damage.md
+  - Examples:
+      - Overview: examples/index.md
+      - 01 p2p baseline: examples/01_p2p_baseline.md
+      - 02 storm record: examples/02_storm_record.md
+      - 03 pfe limit sweep: examples/03_pfe_limit_sweep.md
+      - 04 regulator tau: examples/04_regulator_tau.md
+      - 05 amplitude period map: examples/05_amplitude_period_map.md
+      - 06 spice crosscheck: examples/06_spice_crosscheck.md
+      - 07 swing onset: examples/07_swing_onset.md
+      - 08 pfe beyond range study: examples/08_pfe_beyond_range_study.md
+      - 09 cable properties: examples/09_cable_properties.md
+      - 10 pfe overrange: examples/10_pfe_overrange.md
+      - 11 nonlinear devices: examples/11_nonlinear_devices.md
+      - 12 earthing gpr: examples/12_earthing_gpr.md
   - Developer guide:
       - Architecture: dev/architecture.md
       - Adding an element: dev/adding_element.md
@@ -63,7 +94,27 @@ nav:
       - Tooling: dev/tooling.md
       - Release: dev/release.md
       - Later - microsecond windows: dev/future_microsecond_windows.md
-  - API: api/index.md
+  - API:
+      - Overview: api/index.md
+      - core: api/core.md
+      - config: api/config.md
+      - damage: api/damage.md
+      - earthing: api/earthing.md
+      - elements: api/elements.md
+      - impact: api/impact.md
+      - io: api/io.md
+      - lightning: api/lightning.md
+      - lines: api/lines.md
+      - metrics: api/metrics.md
+      - mna: api/mna.md
+      - network: api/network.md
+      - plotting: api/plotting.md
+      - properties: api/properties.md
+      - space_weather: api/space_weather.md
+      - spice: api/spice.md
+      - studies: api/studies.md
+      - validation: api/validation.md
+      - waveforms: api/waveforms.md
   - Roadmap: roadmap.md
   - Changelog: changelog.md
   - Sources: references.md

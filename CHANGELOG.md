@@ -3,6 +3,10 @@
 All notable changes are listed here. Format: [Keep a Changelog](https://keepachangelog.com/), versioning: [SemVer](https://semver.org/).
 
 ## [Unreleased]
+### Added
+- API reference rework: every subpackage has an introduction, links to its chapters and a module table with stubs flagged; the index lists the public API at a glance; Google-style Args / Returns / Raises sections on the `bolts.api` entry points, `build_network`, `load_parameters` and the `Result` methods; type annotations for them; mkdocstrings shows signatures, source and links to the Python, NumPy and SciPy docs.
+- Examples in the docs: one page per experiment (question, input, expectation, figures, command, full source) under `docs/examples/`, written by `make example-docs` (`scripts/gen_example_docs.py`); `make examples` now runs experiments 10 to 12 too.
+- `tests/test_docstrings.py`: every public function and class has a docstring, the API entry points document their arguments, every subpackage has an introduction.
 
 ## [0.2.1] - 2026-11-13
 First version published to PyPI (0.2.0 was tagged but rejected by TestPyPI over an invalid classifier, so it was never released).
