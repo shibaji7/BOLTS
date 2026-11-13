@@ -3,6 +3,9 @@
 All notable changes are listed here. Format: [Keep a Changelog](https://keepachangelog.com/), versioning: [SemVer](https://semver.org/).
 
 ## [Unreleased]
+### Added
+- Packaging: SPDX license expression and `license-files` in `pyproject.toml` (setuptools >= 77), removed the invalid Electrical Engineering classifier that TestPyPI rejected.
+- `make publish-test` and `make publish` (twine upload fallback) and a Publishing section in `docs/dev/release.md`.
 
 ## [0.2.0] - 2026-11-12
 ### Changed

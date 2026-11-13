@@ -22,7 +22,7 @@ ifeq ($(NO_COLOR),)
 endif
 
 .DEFAULT_GOAL := help
-.PHONY: help banner env install dev test cov lint fmt dupes spdx changelog-check pre-commit pre-commit-install qa api-docs doc-figures docs docs-serve build check spice-check examples tree validate doctor clean distclean
+.PHONY: help banner env install dev test cov lint fmt dupes spdx changelog-check pre-commit pre-commit-install qa api-docs doc-figures docs docs-serve build check publish-test publish spice-check examples tree validate doctor clean distclean
 
 help: banner ## Show this list
 	@printf "$(CB)Usage:$(C0) make $(CC)<target>$(C0)\n\n"
@@ -114,6 +114,13 @@ build: ## Build sdist and wheel
 
 check: build ## Check the built distributions (twine)
 	$(PY) -m twine check dist/*
+
+publish-test: check ## Upload dist/ to TestPyPI with twine (token: TWINE_USERNAME=__token__, TWINE_PASSWORD=pypi-...)
+	$(PY) -m twine upload --repository testpypi --skip-existing dist/*
+
+publish: check ## Upload dist/ to PyPI with twine (asks first; the normal route is the tag-triggered release workflow)
+	@printf "Upload the files in dist/ to PyPI? [y/N] " && read a && [ "$$a" = y ]
+	$(PY) -m twine upload dist/*
 
 tree: ## Show the package layout
 	@find src/bolts -name '*.py' -not -name '__init__.py' | sed 's|src/||' | sort | awk -F/ '{print "  " $$0}'
